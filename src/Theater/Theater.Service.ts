@@ -3,6 +3,7 @@ import { Repository } from "typeorm";
 import { Theater } from "./Theater.Entity";
 import { InjectRepository } from "@nestjs/typeorm";
 
+
 @Injectable()
 export class TheaterService{
 
@@ -11,11 +12,17 @@ export class TheaterService{
         private theaterRepository:Repository<Theater>){}
 
     savetheater(theater:Theater){
-       return this.theaterRepository.save(theater)
+      
+      theater.screen_timing=JSON.stringify(theater.screen_timing);
+
+      return this.theaterRepository.save(theater);
     }
 
-    getTheater(id:number){
-       return this.theaterRepository.findOne({where:{theater_id:id}})
+    async getTheater(id:number){
+     let temp= await this.theaterRepository.findOne({where:{theater_id:id}});
+      temp? temp.screen_timing=JSON.parse(temp.screen_timing): null;
+     return temp;
+       
     }
 
      updateTheater(theater:Theater){

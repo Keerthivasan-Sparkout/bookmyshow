@@ -24,8 +24,8 @@ export class TheaterController{
        return this.theaterService.getTheater(id);
     }
     @Post()
-    saveTheater(@Body() thaeter:Theater){
-       return this.theaterService.savetheater(thaeter);
+    saveTheater(@Body() theater:Theater){
+       return this.theaterService.savetheater(theater);
     }
 
     @Patch()

@@ -4,6 +4,7 @@ import { TheaterService } from "./Theater.Service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Theater } from "./Theater.Entity";
 
+
 @Module({
     
     imports: [TypeOrmModule.forFeature([Theater])],

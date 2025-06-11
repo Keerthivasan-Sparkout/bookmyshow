@@ -6,6 +6,7 @@ import { TheaterModule } from './Theater/Theater.module';
 import { Theater } from './Theater/Theater.Entity';
 import { Movies } from './Movies/Movies.Entity';
 import { MoviesModule } from './Movies/Movies.Module';
+import { MovieTimingAndScreen } from './Theater/Theater.Timing.Entity';
 
 @Module({
   imports: [TheaterModule,
@@ -17,7 +18,7 @@ import { MoviesModule } from './Movies/Movies.Module';
       username: 'root',
       password: 'root',
       database: 'bookmyshow',
-      entities: [Theater,Movies],
+      entities: [Theater,Movies,MovieTimingAndScreen],
       synchronize: true,
     }),
     TypeOrmModule.forFeature([Theater,Movies])
