@@ -12,7 +12,7 @@ export class Movies {
     @ManyToMany(() => Theater, theater => theater.movie_list)
     @JoinTable()
     theater_list: Theater[] ;
-    temp: Promise<string | Theater[]>;
+
 
 
 

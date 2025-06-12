@@ -1,5 +1,6 @@
 import { Movies } from "src/Movies/Movies.Entity";
 import { Column, Entity, ManyToMany, OneToMany, PrimaryColumn } from "typeorm";
+import { Showes } from "../Show/Shows.Entity";
 
 @Entity()
 export class Theater{
@@ -14,9 +15,14 @@ export class Theater{
     total_screen:number
     @ManyToMany(()=>Movies,(movie)=>movie.theater_list)
     movie_list:Movies;
-    // @OneToMany(()=>MovieTimingAndScreen, (movieTimingAndScreen)=>movieTimingAndScreen.theater)
     @Column()
     screen_timing:string;
+    @Column()
+    password:string;
+    @OneToMany(()=>Showes,(showes)=>showes.theater_details)
+    screen_details:Showes[]
+
+    
 }
 
 

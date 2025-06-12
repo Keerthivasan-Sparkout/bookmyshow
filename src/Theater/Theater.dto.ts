@@ -12,9 +12,11 @@ export class TheaterDto{
           theater_City:string
           @IsNumber()
           total_screen:number
+           @IsString()
+          password:string
           @IsArray()
           movie_list:Movies;
           @IsArray()
-          screen_timing:{ timing:string, running_movie:string}[] | string;
+          screen_timing:{screenName:string, timing:string, running_movie:string , total_seat:number}[] | string;
 
 }

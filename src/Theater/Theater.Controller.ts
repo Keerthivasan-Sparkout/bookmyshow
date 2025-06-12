@@ -21,10 +21,12 @@ export class TheaterController{
 
     @Get("/:id")
     getTheater(@Param('id',ParseIntPipe) id:number){
+
        return this.theaterService.getTheater(id);
     }
     @Post()
     saveTheater(@Body() theater:Theater){
+      
        return this.theaterService.savetheater(theater);
     }
 

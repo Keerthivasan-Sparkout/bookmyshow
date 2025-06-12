@@ -14,7 +14,7 @@ export class TheaterService{
     savetheater(theater:Theater){
       
       theater.screen_timing=JSON.stringify(theater.screen_timing);
-
+      
       return this.theaterRepository.save(theater);
     }
 
@@ -26,6 +26,7 @@ export class TheaterService{
     }
 
      updateTheater(theater:Theater){
+      theater.screen_timing=JSON.stringify(theater.screen_timing);
       return  this.theaterRepository.update(theater.theater_id,theater);    
     }
     
@@ -38,6 +39,7 @@ export class TheaterService{
     }
 
     fetchTheaterByName(theaterName){
+      
        return this.theaterRepository.findOne({where:{theater_name:theaterName}});
     }
 

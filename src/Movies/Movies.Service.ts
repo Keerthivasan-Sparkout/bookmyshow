@@ -20,7 +20,7 @@ export class MoviesServices {
         temp.movie_id = newMovie.movie_id;
         temp.movie_names = newMovie.movie_names;
         temp.theater_list = await this.addTheater(newMovie.theater_list);
-        return this.movieRepository.save(temp);
+        return await this.movieRepository.save(temp);
     }
 
     upadteMovies(movies: Movies) {
@@ -56,6 +56,10 @@ export class MoviesServices {
         return this.movieRepository.find();
     }
 
+    getMoviesByMoviesName(name:string){
+        return this.movieRepository.findOne({where:{movie_names:name}}); 
+       }
+
          
 
         // async fetchTheaterByMoviesName(movieName: string) {
@@ -63,7 +67,7 @@ export class MoviesServices {
         // }
 
          async fetchTheaterByMoviesName(movieName: string) {
-            let currentMovieTheater= await this.movieRepository.findOne({ where: { movie_names: movieName }, relations: ['theater_list'] })
+            let currentMovieTheater= await this.movieRepository.findOne({ where: { movie_names: movieName  }, relations: ['theater_list'] })
             let currentMovieTheaterlist=currentMovieTheater?.theater_list
 
             for(let index in currentMovieTheaterlist){
@@ -82,6 +86,13 @@ export class MoviesServices {
 
             return currentMovieTheaterlist;
 
+            }
+
+
+            fetchTheaterByMoviesNameAndLocation(name:string,location:string){
+
+                
+                    this.movieRepository.find({where:{movie_names:name}})
             }
 
 }

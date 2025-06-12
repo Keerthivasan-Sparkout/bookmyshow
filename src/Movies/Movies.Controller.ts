@@ -7,25 +7,7 @@ export class MoviesController{
 
     constructor(private movieServices:MoviesServices){}
 
-    @Get()
-        getSample(){
-            const l=[
-                {
-                names:"inox",
-                city:"coimbatore",
-                timing:["10:00 pm","11:00pm"]
-                },{
-                names:"inox",
-                city:"coimbatore",
-                timing:["10:00 pm","11:00pm"]
-                },{
-                names:"inox",
-                city:"coimbatore",
-                timing:["10:00 pm","11:00pm"]
-                }
-            ]
-            return l;
-        }
+    
 
     @Post()
     saveMovies(@Body() movies:Movies){
@@ -45,6 +27,12 @@ export class MoviesController{
     @Get("by-name/:name")
     getTheaterByMovieName(@Param('name') name: string){
         return this.movieServices.fetchTheaterByMoviesName(name);
+    }
+
+
+     @Get("by-name/:name")
+    getTheaterByMovieNameAndLocation(@Param('name') name: string,@Param('location') location:string){
+        return this.movieServices.fetchTheaterByMoviesNameAndLocation(name,location);
     }
 
     @Get("/:id")
