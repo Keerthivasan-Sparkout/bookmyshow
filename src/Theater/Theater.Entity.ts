@@ -8,6 +8,8 @@ export class Theater{
     @PrimaryColumn()
     theater_id:number;
     @Column()
+    theater_username:string;
+    @Column()
     theater_name:string;
     @Column()
     theater_City:string

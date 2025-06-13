@@ -1,7 +1,10 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards } from "@nestjs/common";
 import { Theater } from "./Theater.Entity";
 import { TheaterService } from "./Theater.Service";
+import { AuthGuard } from "@nestjs/passport";
 
+
+@UseGuards(AuthGuard('jwt'))
 @Controller("/theater")
 export class TheaterController{
     

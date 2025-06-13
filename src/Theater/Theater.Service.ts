@@ -47,6 +47,9 @@ export class TheaterService{
       return await this.theaterRepository.find({where:{theater_City:location}});
     }
 
+   async validateUsername(username:string){
+     return (await this.theaterRepository.find()).filter((theater) => theater.theater_username===username);
+    }
    
 
 }

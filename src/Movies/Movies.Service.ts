@@ -89,10 +89,11 @@ export class MoviesServices {
             }
 
 
-            fetchTheaterByMoviesNameAndLocation(name:string,location:string){
+           async fetchTheaterByMoviesNameAndLocation(name:string,location:string){
 
-                
-                    this.movieRepository.find({where:{movie_names:name}})
+                 let theaters=await  this.fetchTheaterByMoviesName(name);  
+              return theaters?.filter(ele=>ele.theater_City===location)           
+                    
             }
 
 }

@@ -6,11 +6,8 @@ import { Injectable } from "@nestjs/common";
 import { MoviesServices } from "src/Movies/Movies.Service";
 
 
-
-
 @Injectable()
 export class ShowesService {
-
 
     constructor(
         @InjectRepository(Showes)
@@ -33,8 +30,7 @@ export class ShowesService {
         let temp_movie = await this.moviesServices.getMoviesByMoviesName("retro");
         temp ? showes.theater_details = temp : null;
         temp_movie ? showes.running_movie = temp_movie : null;
-   
-    
+      
         return this.showesRepository.save(showes);
     }
 

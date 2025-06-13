@@ -1,7 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
 import { ShowesService } from "./Showes.Service";
 import { Showes } from "./Shows.Entity";
-import { showesDto } from "./Showes.dto";
 
 @Controller("/theater/showes")
 export class ShowesController{

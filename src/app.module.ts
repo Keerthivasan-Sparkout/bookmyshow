@@ -9,19 +9,22 @@ import { MoviesModule } from './Movies/Movies.Module';
 import { Showes } from './Show/Shows.Entity';
 import { ShowModule } from './Show/Showes.Module';
 import { TheaterService } from './Theater/Theater.Service';
+import { AuthModule } from './Auth/Auth.Module';
+import { Theatervendors } from './Theater/TheaterOwners.Entity';
 
 @Module({
   imports: [TheaterModule,
     MoviesModule,
     ShowModule,
+    AuthModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
       port: 3306,
       username: 'root',
       password: 'root',
-      database: 'bookmyshow12',
-      entities: [Theater,Movies,Showes],
+      database: 'bookmyshow13',
+      entities: [Theater,Movies,Showes,Theatervendors],
       synchronize: true,
     }),
     TypeOrmModule.forFeature([Theater,Movies,Showes])
