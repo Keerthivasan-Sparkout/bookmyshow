@@ -14,9 +14,8 @@ export class TheaterVendorsService{
         this.vendorsrepository.save(theatervendors);
     }
 
-    getVendors(email:string){
-        console.log(email)
-        return this.vendorsrepository.findOne({where:{vendors_email:email}})
+    async getVendors(email:string){
+       
+        return await this.vendorsrepository.findOne({where:{vendors_email:email}})
     }
-
 }

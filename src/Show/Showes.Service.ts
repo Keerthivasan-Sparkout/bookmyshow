@@ -30,12 +30,15 @@ export class ShowesService {
         let temp_movie = await this.moviesServices.getMoviesByMoviesName("retro");
         temp ? showes.theater_details = temp : null;
         temp_movie ? showes.running_movie = temp_movie : null;
-      
         return this.showesRepository.save(showes);
     }
 
     getTheaterDetails(name: string) {
         return this.theaterServices.fetchTheaterByName(name)
     }
+
+//    async displayMovies(movieName:string){
+//         (await this.showesRepository.find()).filter(movie=>movie.running_movie.movie_names===movieName);
+//     }
 
 }

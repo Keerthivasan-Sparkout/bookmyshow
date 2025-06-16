@@ -8,7 +8,6 @@ import { Movies } from './Movies/Movies.Entity';
 import { MoviesModule } from './Movies/Movies.Module';
 import { Showes } from './Show/Shows.Entity';
 import { ShowModule } from './Show/Showes.Module';
-import { TheaterService } from './Theater/Theater.Service';
 import { AuthModule } from './Auth/Auth.Module';
 import { Theatervendors } from './Theater/TheaterOwners.Entity';
 
@@ -23,7 +22,7 @@ import { Theatervendors } from './Theater/TheaterOwners.Entity';
       port: 3306,
       username: 'root',
       password: 'root',
-      database: 'bookmyshow13',
+      database: 'bookmyshow16',
       entities: [Theater,Movies,Showes,Theatervendors],
       synchronize: true,
     }),

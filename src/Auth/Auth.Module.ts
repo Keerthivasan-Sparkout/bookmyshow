@@ -6,17 +6,18 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Theatervendors } from "src/Theater/TheaterOwners.Entity";
 import { TheaterVendorsService } from "src/Theater/Theater.Owners.service";
 import { JwtModule } from "@nestjs/jwt";
+import { jwtConstants } from "./Secret.Constant";
 
 @Module({
-    imports:[TheaterModule,
+    imports: [TheaterModule,
         TypeOrmModule.forFeature([Theatervendors]),
-    JwtModule.register({
-        secret:"my-app-bookmyshow",
-        signOptions:{expiresIn:'1h'},
-        global:true
-    }
-    )],
-    controllers:[AuthController],
-    providers:[AuthService]
-})  
-export class AuthModule{}
+        JwtModule.register({
+            secret: jwtConstants.secret,
+            signOptions: { expiresIn: '1h' },
+            global: true
+        }
+        )],
+    controllers: [AuthController],
+    providers: [AuthService]
+})
+export class AuthModule { }

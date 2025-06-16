@@ -1,5 +1,5 @@
 import { Theater } from "src/Theater/Theater.Entity";
-import { Column, Entity, JoinTable, ManyToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany,  PrimaryColumn } from "typeorm";
 
 @Entity()
 export class Movies {
@@ -11,9 +11,6 @@ export class Movies {
 
     @ManyToMany(() => Theater, theater => theater.movie_list)
     @JoinTable()
-    theater_list: Theater[] ;
-
-
-
+    theater_list: Theater[];
 
 }

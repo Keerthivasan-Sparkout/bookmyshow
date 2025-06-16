@@ -1,19 +1,22 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Movies } from "./Movies.Entity";
-import { Any, Repository } from "typeorm";
+import { Any, ListCollectionsCursor, Repository } from "typeorm";
 import { Theater } from "src/Theater/Theater.Entity";
 import { TheaterService } from "src/Theater/Theater.Service";
-
 
 
 @Injectable()
 export class MoviesServices {
 
+    static locationvise: Theater[] = [];
+
+    static moviesIncurrentList: Set<Number>;
+
     constructor(@InjectRepository(Movies) private movieRepository: Repository<Movies>,
         @InjectRepository(Theater) private moviesTheaterRepository: Repository<Theater>,
-        private theaterService: TheaterService) { }
-
+        private theaterService: TheaterService
+    ) { }
 
     async saveMovies(newMovie: Movies) {
         let temp = new Movies();
@@ -56,44 +59,68 @@ export class MoviesServices {
         return this.movieRepository.find();
     }
 
-    getMoviesByMoviesName(name:string){
-        return this.movieRepository.findOne({where:{movie_names:name}}); 
-       }
+    getMoviesByMoviesName(name: string) {
+        return this.movieRepository.findOne({ where: { movie_names: name } });
+    }
 
-         
 
-        // async fetchTheaterByMoviesName(movieName: string) {
-        //     return await this.movieRepository.findOne({ where: { movie_names: movieName }, relations: ['theater_list'] })
-        // }
 
-         async fetchTheaterByMoviesName(movieName: string) {
-            let currentMovieTheater= await this.movieRepository.findOne({ where: { movie_names: movieName  }, relations: ['theater_list'] })
-            let currentMovieTheaterlist=currentMovieTheater?.theater_list
+    // async fetchTheaterByMoviesName(movieName: string) {
+    //     return await this.movieRepository.findOne({ where: { movie_names: movieName }, relations: ['theater_list'] })
+    // }
 
-            for(let index in currentMovieTheaterlist){
-                currentMovieTheaterlist[index].screen_timing=JSON.parse(currentMovieTheaterlist[index].screen_timing)
+    async fetchTheaterByMoviesName(movieName: string) {
+        let currentMovieTheater = await this.movieRepository.findOne({ where: { movie_names: movieName }, relations: ['theater_list'] })
+        let currentMovieTheaterlist = currentMovieTheater?.theater_list
+
+        for (let index in currentMovieTheaterlist) {
+            currentMovieTheaterlist[index].screen_timing = JSON.parse(currentMovieTheaterlist[index].screen_timing)
+        }
+
+
+        for (let index in currentMovieTheaterlist) {
+            let currentMovieName = currentMovieTheaterlist[index].screen_timing;
+
+            if (Array.isArray(currentMovieName)) {
+                currentMovieTheaterlist[index].screen_timing = currentMovieName.filter((words) => words.running_movie === movieName)
             }
 
+        }
 
-            for(let index in currentMovieTheaterlist){
-                let currentMovieName=currentMovieTheaterlist[index].screen_timing;
-              
-              if(Array.isArray(currentMovieName)){
-                currentMovieTheaterlist[index].screen_timing= currentMovieName.filter((words)=>words.running_movie===movieName)
-              }
-              
-            }
+        return currentMovieTheaterlist;
 
-            return currentMovieTheaterlist;
-
-            }
+    }
 
 
-           async fetchTheaterByMoviesNameAndLocation(name:string,location:string){
+    async fetchTheaterByMoviesNameAndLocation(name: string, location: string) {
 
-                 let theaters=await  this.fetchTheaterByMoviesName(name);  
-              return theaters?.filter(ele=>ele.theater_City===location)           
-                    
-            }
+        let theaters = await this.fetchTheaterByMoviesName(name);
+        return theaters?.filter(ele => ele.theater_City === location)
+
+    }
+
+    async fetchMoviesByLocation(location: string | undefined) {
+
+        let city = (location != null) ? location : "chennai";
+
+        let movieslist: Movies[] = await this.movieRepository.find({ relations: ['theater_list'] })
+
+        let theaterlist: Theater[] = movieslist.flatMap(movie => movie.theater_list)
+
+        theaterlist.forEach(theater => theater.theater_City === city ? MoviesServices.locationvise.push(theater) : null)
+
+        return this.getAllMoviesInCurrentLocation(MoviesServices.locationvise);
+    }
+
+
+    getAllMoviesInCurrentLocation(theaterlist: Theater[]) {
+
+        let newlist: Movies[] = [];
+        theaterlist.forEach(theater => newlist.push(theater.movie_list))
+        newlist.forEach(ele => MoviesServices.moviesIncurrentList.add(ele?.movie_id))
+        return MoviesServices.moviesIncurrentList;
+
+    }
+
 
 }

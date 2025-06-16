@@ -15,12 +15,10 @@ export class Theater{
     theater_City:string
     @Column()
     total_screen:number
-    @ManyToMany(()=>Movies,(movie)=>movie.theater_list)
-    movie_list:Movies;
+    @OneToMany(()=>Movies,(movie)=>movie.theater_list)
+    movie_list:Movies  ;
     @Column()
     screen_timing:string;
-    @Column()
-    password:string;
     @OneToMany(()=>Showes,(showes)=>showes.theater_details)
     screen_details:Showes[]
 

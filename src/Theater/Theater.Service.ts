@@ -2,6 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
 import { Theater } from "./Theater.Entity";
 import { InjectRepository } from "@nestjs/typeorm";
+import { Showes } from "src/Show/Shows.Entity";
+import { ShowesService } from "src/Show/Showes.Service";
 
 
 @Injectable()
@@ -9,12 +11,13 @@ export class TheaterService{
 
     public constructor(
         @InjectRepository(Theater)
-        private theaterRepository:Repository<Theater>){}
+        private theaterRepository:Repository<Theater>,private showService:ShowesService
+){}
 
     savetheater(theater:Theater){
       
       theater.screen_timing=JSON.stringify(theater.screen_timing);
-      
+      theater.screen_details.forEach(ele=>this.showService.saveShowes(ele))
       return this.theaterRepository.save(theater);
     }
 
